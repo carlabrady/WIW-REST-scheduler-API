@@ -3,8 +3,8 @@ Code challenge for Associate Full Stack Engineer position with When I Work
 
 ## User Stories
 
-- [ ] As an employee, I want to know when I am working, by being able to see all of the shifts assigned to me.
-- [ ] As an employee, I want to know who I am working with, by being able to see the employees that are working during the same time period as me.
+- [x] As an employee, I want to know when I am working, by being able to see all of the shifts assigned to me. test url = localhost:5005/employee/empSchedule?employee_id=3
+- [x] As an employee, I want to know who I am working with, by being able to see the employees that are working during the same time period as me. test url = localhost:5005/employee/coworkers/?shift_id=1
 - [ ] As an employee, I want to know how much I worked, by being able to get a summary of hours worked for each week.
 - [ ] As an employee, I want to be able to contact my managers, by seeing manager contact information for my shifts.
 
