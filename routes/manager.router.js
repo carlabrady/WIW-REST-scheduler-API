@@ -95,4 +95,25 @@ router.put('/changeEmployee', function (req, res) {
     });
 });
 
+router.get('/empInfo', function (req, res) {
+    pool.connect(function (err, client, done) {
+        if (err) {
+            console.log('Pool Connection Error');
+            done();
+            res.sendStatus(500);
+        } else {
+            var query = "SELECT * FROM users WHERE role = 'employee'";
+            client.query(query, function (quErr, resObj) {
+                done();
+                if (quErr) {
+                    console.log('query error');
+                    res.sendStatus(500);
+                } else {
+                    res.send(resObj.rows);
+                }
+            });
+        }
+    })
+});
+
 module.exports = router;
