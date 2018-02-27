@@ -3,7 +3,7 @@ var pool = require('./pool');
 
 router.post('/addShift', function (req, res) {
     pool.connect(function (err, client, done) {
-      var query = 'INSERT INTO shifts (manager_id, employee_id, break, start_time, end_time) VALUES ($1, $2, $3, $4)';
+      var query = 'INSERT INTO shifts (manager_id, employee_id, break, start_time, end_time) VALUES ($1, $2, $3, $4, $5)';
       var values = [
         req.query.manager_id,
         req.query.employee_id,
@@ -21,7 +21,7 @@ router.post('/addShift', function (req, res) {
           console.log("Error inserting data: ", err);
           res.sendStatus(500);
         } else {
-          res.status(203);
+          res.sendStatus(201);
         }
       });
     });
