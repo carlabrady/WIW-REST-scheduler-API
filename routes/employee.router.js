@@ -10,7 +10,7 @@ router.get('/empSchedule', function (req, res) {
             done();
             res.sendStatus(500);
         } else {
-            var query = 'SELECT * FROM shifts WHERE employee_id = $1';
+            var query = 'SELECT * FROM shifts WHERE employee_id = $1 OR employee_id = null';
             client.query(query, [empId], function (quErr, resObj) {
                 done();
                 if (quErr) {
@@ -64,10 +64,6 @@ router.get('/coworkers', function (req, res) {
     })
 });
 
-router.get('/hoursWorked', function (req, res) {
-
-});
-
 router.get('/managerInfo', function (req, res) {
     var empId = req.query.employee_id;
     pool.connect(function (err, client, done) {
@@ -89,6 +85,5 @@ router.get('/managerInfo', function (req, res) {
         }
     })
 });
-
 
 module.exports = router;
