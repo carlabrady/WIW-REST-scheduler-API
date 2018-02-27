@@ -3,32 +3,31 @@ var pool = require('./pool');
 
 router.post('/addShift', function (req, res) {
     pool.connect(function (err, client, done) {
-      var query = 'INSERT INTO shifts (manager_id, employee_id, break, start_time, end_time) VALUES ($1, $2, $3, $4, $5)';
-      var values = [
-        req.query.manager_id,
-        req.query.employee_id,
-        req.query.break,
-        req.query.start_time,
-        req.query.end_time
-      ];
-      if (err) {
-        console.log("Error connecting: ", err);
-        res.sendStatus(500);
-      }
-      client.query(query, values, function (err, result) {
-        done();
+        var query = 'INSERT INTO shifts (manager_id, employee_id, break, start_time, end_time) VALUES ($1, $2, $3, $4, $5)';
+        var values = [
+            req.query.manager_id,
+            req.query.employee_id,
+            req.query.break,
+            req.query.start_time,
+            req.query.end_time
+        ];
         if (err) {
-          console.log("Error inserting data: ", err);
-          res.sendStatus(500);
-        } else {
-          res.sendStatus(201);
+            console.log("Error connecting: ", err);
+            res.sendStatus(500);
         }
-      });
+        client.query(query, values, function (err, result) {
+            done();
+            if (err) {
+                console.log("Error inserting data: ", err);
+                res.sendStatus(500);
+            } else {
+                res.sendStatus(201);
+            }
+        });
     });
-  });
+});
 
 router.get('/scheduleByDate', function (req, res) {
-    console.log("in get schedule");
     var startDate = req.query.start;
     var endDate = req.query.end;
     pool.connect(function (err, client, done) {
@@ -45,10 +44,34 @@ router.get('/scheduleByDate', function (req, res) {
                     res.sendStatus(500);
                 } else {
                     res.send(resObj.rows);
-                } 
-            }); 
+                }
+            });
         }
     })
+});
+
+router.put('/updateTime', function (req, res) {
+    var query = 'UPDATE shifts SET start_time = $1, end_time = $2 WHERE id = $3';
+    var shiftId = req.query.id;
+    var startTime = req.query.start_time;
+    var endTime = req.query.end_time;
+    console.log(shiftId, startTime, endTime);
+    pool.connect(function (err, client, done) {
+        if (err) {
+            console.log("Error connecting: ", err);
+            res.sendStatus(500);
+        } else {
+            client.query(query, [startTime, endTime, shiftId], function (quErr, resObj) {
+                client.end();
+                if (err) {
+                    console.log("Error inserting data: ", err);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(202);
+                }
+            });
+        }
+    });
 });
 
 module.exports = router;

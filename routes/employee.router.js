@@ -18,8 +18,8 @@ router.get('/empSchedule', function (req, res) {
                     res.sendStatus(500);
                 } else {
                     res.send(resObj.rows);
-                } 
-            }); 
+                }
+            });
         }
     })
 });
@@ -41,6 +41,7 @@ router.get('/coworkers', function (req, res) {
                 }
             });
         }
+
         function getCoWorkerNames(start, end) {
             var query = 'SELECT name FROM users JOIN shifts ON users.id = shifts.employee_id WHERE $1 <= start_time AND start_time< $2 OR $1 < end_time AND end_time <= $2';
             client.query(query, [start, end], function (quErr, resObj) {
@@ -63,6 +64,10 @@ router.get('/coworkers', function (req, res) {
     })
 });
 
+router.get('/hoursWorked', function (req, res) {
+
+});
+
 router.get('/managerInfo', function (req, res) {
     var empId = req.query.employee_id;
     pool.connect(function (err, client, done) {
@@ -79,8 +84,8 @@ router.get('/managerInfo', function (req, res) {
                     res.sendStatus(500);
                 } else {
                     res.send(resObj.rows);
-                } 
-            }); 
+                }
+            });
         }
     })
 });
