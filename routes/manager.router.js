@@ -55,13 +55,34 @@ router.put('/updateTime', function (req, res) {
     var shiftId = req.query.id;
     var startTime = req.query.start_time;
     var endTime = req.query.end_time;
-    console.log(shiftId, startTime, endTime);
     pool.connect(function (err, client, done) {
         if (err) {
             console.log("Error connecting: ", err);
             res.sendStatus(500);
         } else {
             client.query(query, [startTime, endTime, shiftId], function (quErr, resObj) {
+                client.end();
+                if (err) {
+                    console.log("Error inserting data: ", err);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(202);
+                }
+            });
+        }
+    });
+});
+
+router.put('/changeEmployee', function (req, res) {
+    var query = 'UPDATE shifts SET employee_id = $1 WHERE id = $2';
+    var shiftId = req.query.id;
+    var empId = req.query.employee_id;
+    pool.connect(function (err, client, done) {
+        if (err) {
+            console.log("Error connecting: ", err);
+            res.sendStatus(500);
+        } else {
+            client.query(query, [empId, shiftId], function (quErr, resObj) {
                 client.end();
                 if (err) {
                     console.log("Error inserting data: ", err);

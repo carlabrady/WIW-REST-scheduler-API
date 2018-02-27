@@ -16,5 +16,6 @@ Code challenge for Associate Full Stack Engineer position with When I Work.
 - Example url = localhost:5005/manager/scheduleByDate?start=2018-02-19&end=2018-02-25
 - [x] As a manager, I want to be able to change a shift, by updating the time details.
 - Example url = localhost:5005/manager/updateTime?id=1&start_time='2018-02-19 10:00:00'&end_time='2018-02-19 18:00:00'
-- [ ] As a manager, I want to be able to assign a shift, by changing the employee that will work a shift.
+- [x] As a manager, I want to be able to assign a shift, by changing the employee that will work a shift.
+-Example url = localhost:5005/manager/changeEmployee?id=2&employee_id=4
 - [ ] As a manager, I want to contact an employee, by seeing employee details.
